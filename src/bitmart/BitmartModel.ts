@@ -9,12 +9,18 @@ class BitmartModel extends Bitmart {
       : "/spot/v1/ticker";
     return await this.publicRequest("get", endpoint);
   };
+  getDepth = async (symbol: string, precision: string, size: number) => {
+    let endpoint = `/spot/v1/symbols/book?symbol=${symbol}`;
+    if (precision) {
+      endpoint = endpoint + `'&precision=${precision}`
+    }
+    if (size) {
+      endpoint = endpoint + `'&size=${size}`
+    }
+    return await this.publicRequest("get", endpoint);
+  };
   getBalance = async () => {
-    const balances = await this.privateRequest(
-      "get",
-      "/account/v1/wallet?account_type=1",
-      "account_type=1"
-    );
+    const balances = await this.privateRequest("get","/account/v1/wallet?account_type=1","account_type=1");
     return balances;
   };
   placeMarketOrder = async(symbol:string,side:string,size:number)=>{
@@ -44,14 +50,14 @@ class BitmartModel extends Bitmart {
     return order;
   };
   getOrder = async (symbol:string,orderId:string) => {
-    const cancelOrder = await this.privateRequest('get',`/spot/v1/order_detail?symbol='${symbol}'&order_id=${orderId}`,`symbol='${symbol}'&order_id=${orderId}`);
+    const cancelOrder = await this.privateRequest('get',`/spot/v1/order_detail?symbol=${symbol}&order_id=${orderId}`,`symbol=${symbol}&order_id=${orderId}`);
     return cancelOrder;
   };
   testGet = async()=>{
     const test = await this.privateRequest('get','/spot/v1/test-get?symbol=BTC_USDT','symbol=BTC_USDT');
     return test;
   }
-  testPost = async () =>{
+  testPost = async () => {
     const test = await this.privateRequest('post','/spot/v1/test-post',{"symbol":"BTC_USDT","price":"8600","count":"100"});
     return test;
   }
@@ -63,16 +69,20 @@ class BitmartModel extends Bitmart {
     });
     return cancelOrder;
   }
-  getServerTime = async()=>{
+  getServerTime = async()=> {
     const serverTime = await this.publicRequest('get','/system/time');
     return serverTime;
   }
-  cancelAllOrders = async(symbol:string,side:string)=>{
+  cancelAllOrders = async(symbol:string,side:string)=> {
     const order = await this.privateRequest("post", "/spot/v1/cancel_orders", {
       "symbol":symbol,
       "side":side
     });
     return order;
+  }
+  getUserOrders = async(symbol:string,offset:number,limit:number,status:string)=>{
+    const orders = await this.privateRequest('get',`/spot/v1/orders?symbol=${symbol}&status=${status}&offset=${offset}&limit=${limit}`,`symbol=${symbol}&status=${status}&offset=${offset}&limit=${limit}`);
+    return orders;
   }
   getKLineData = async (symbol: string,step:number,from: number,to: number) => { 
     const kLineData = await this.publicRequest('get', `/spot/v1/symbols/kline?symbol=${symbol}&step=${step}&from=${from}&to=${to}`);

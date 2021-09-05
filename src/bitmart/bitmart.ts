@@ -13,7 +13,6 @@ class Bitmart {
     this.initRequestHadler();
   }
   private getSignedMessage(params: any) {
-    console.log("params", params);
   //  return   crypto.createHmac("SHA256", this.apiSecret).update(this.timestamp  + "#" + this.apiName + "#" + params).digest("hex");
     return cryptoJs.HmacSHA256(
       this.timestamp  + "#" + this.apiName + "#" + params,
@@ -35,7 +34,6 @@ class Bitmart {
             config.headers["X-BM-TIMESTAMP"] = this.timestamp;
             config.headers["X-BM-KEY"] = this.apiAccess;
         }
-        console.log("final hit with", config);
         return config;
       },
       (error: any) => {
@@ -45,7 +43,6 @@ class Bitmart {
   };
   protected privateRequest = async (method: string, endpoint: string, payload: any = null) => {
     this.timestamp = Date.now().toString();
-    console.log("timestamp from server",this.timestamp)
     const config: any = {
       method,
       url: endpoint,
@@ -53,7 +50,6 @@ class Bitmart {
     };
     if (payload) {
       if (method === "post") {
-        console.log("post method", payload);
         config.data =  JSON.stringify(payload);
       }
       let authString = (method === 'post') ? JSON.stringify(payload) : qs.stringify(payload);
@@ -62,7 +58,6 @@ class Bitmart {
       };
     }
     const { data: result } = await this.requestHandler(config);
-    console.log("daat", result);
     return result;
   };
   protected async publicRequest(method:string, endpoint:string, payload = null) {
