@@ -84,6 +84,10 @@ class BitmartModel extends Bitmart {
     const orders = await this.privateRequest('get',`/spot/v1/orders?symbol=${symbol}&status=${status}&offset=${offset}&limit=${limit}`,`symbol=${symbol}&status=${status}&offset=${offset}&limit=${limit}`);
     return orders;
   }
+  getUserTrades = async(symbol:string,orderId:number)=>{
+    const orders = await this.privateRequest('get',`/spot/v1/trades?symbol=${symbol}&order_id=${orderId}`,`symbol=${symbol}&order_id=${orderId}`);
+    return orders;
+  }
   getKLineData = async (symbol: string,step:number,from: number,to: number) => { 
     const kLineData = await this.publicRequest('get', `/spot/v1/symbols/kline?symbol=${symbol}&step=${step}&from=${from}&to=${to}`);
     return kLineData;
