@@ -1,3 +1,8 @@
+# Word on the code and package
+
+The repository was forked from https://github.com/pardeepantech/bitmart-apis.
+I removed the console.log calls that were left for debugging purposes and added some missing APIs.
+
 # bitmart-api-model
 
 Use this Package to interact with Birmart Pro new api.
