@@ -13,6 +13,7 @@ declare class BitmartModel extends Bitmart {
     getServerTime: () => Promise<any>;
     cancelAllOrders: (symbol: string, side: string) => Promise<any>;
     getUserOrders: (symbol: string, offset: number, limit: number, status: string) => Promise<any>;
+    getUserTrades: (symbol: string, orderId: number) => Promise<any>;
     getKLineData: (symbol: string, step: number, from: number, to: number) => Promise<any>;
 }
 export default BitmartModel;

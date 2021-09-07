@@ -1,6 +1,6 @@
 {
   "name": "bitmart-apis",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "This package is use to interact with bitmart",
   "main": "lib/index.js",
   "bin": "lib/index.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc -p .",
     "start": "ts-node ./src/index.ts",
-    "publish": "tsc -p . npm publish"
+    "publish": "tsc -p ."
   },
   "author": "Taegus",
   "license": "MIT",
